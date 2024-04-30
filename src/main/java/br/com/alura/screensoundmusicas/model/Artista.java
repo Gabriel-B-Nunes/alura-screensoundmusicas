@@ -14,8 +14,16 @@ public class Artista {
     private String nome;
     @Enumerated(value = EnumType.STRING)
     private TipoArtista tipoArtista;
-    @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "artista", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Musica> musicaList = new ArrayList<>();
+
+    public Artista(String nome, TipoArtista tipoArtista) {
+        this.nome = nome;
+        this.tipoArtista = tipoArtista;
+    }
+
+    public Artista() {
+    }
 
     public long getId() {
         return id;
@@ -46,6 +54,7 @@ public class Artista {
     }
 
     public void setMusicaList(List<Musica> musicaList) {
+        musicaList.forEach(m -> m.setArtista(this));
         this.musicaList = musicaList;
     }
 }
